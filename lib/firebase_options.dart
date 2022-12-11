@@ -25,12 +25,12 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
+        return macos;
+      case TargetPlatform.windows:
         throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
+          'DefaultFirebaseOptions have not been configured for windows - '
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
-      case TargetPlatform.windows:
-        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -56,7 +56,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDdDAo9LHaLptL46RfGJavAvVkO2ZPOlqw',
-    appId: '1:634223971849:android:1c588479a8e3013087f2d8',
+    appId: '1:634223971849:android:eb8cf3dbb676310e87f2d8',
     messagingSenderId: '634223971849',
     projectId: 'evarancorp-recipes-book',
     databaseURL: 'https://evarancorp-recipes-book-default-rtdb.europe-west1.firebasedatabase.app',
@@ -65,23 +65,23 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAEPpzNOPV5IUuC_YEbejC7Pm6kN-teowY',
-    appId: '1:634223971849:ios:5880e7d88ab550c687f2d8',
+    appId: '1:634223971849:ios:8024433d420f3be287f2d8',
     messagingSenderId: '634223971849',
     projectId: 'evarancorp-recipes-book',
     databaseURL: 'https://evarancorp-recipes-book-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'evarancorp-recipes-book.appspot.com',
-    iosClientId: '634223971849-bbpb5j61j6oqls5ceui5329o29qv2vrr.apps.googleusercontent.com',
-    iosBundleId: 'com.evaranshark.recipesBookV2',
+    iosClientId: '634223971849-807q98948jpeonrvdaujkgruo8jadsq6.apps.googleusercontent.com',
+    iosBundleId: 'com.example.recipesBookV2',
   );
 
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyA2N7K_OyaQAHzo_Fx05JnrwqNJOsLIVHI',
-    appId: '1:634223971849:web:e38546bbd4df0f7287f2d8',
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyAEPpzNOPV5IUuC_YEbejC7Pm6kN-teowY',
+    appId: '1:634223971849:ios:8024433d420f3be287f2d8',
     messagingSenderId: '634223971849',
     projectId: 'evarancorp-recipes-book',
-    authDomain: 'evarancorp-recipes-book.firebaseapp.com',
     databaseURL: 'https://evarancorp-recipes-book-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'evarancorp-recipes-book.appspot.com',
-    measurementId: 'G-Y78XDL373E',
+    iosClientId: '634223971849-807q98948jpeonrvdaujkgruo8jadsq6.apps.googleusercontent.com',
+    iosBundleId: 'com.example.recipesBookV2',
   );
 }
