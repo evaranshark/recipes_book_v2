@@ -1,30 +1,24 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipes_book_v2/bloc/events/categories_events.dart';
 import 'package:recipes_book_v2/bloc/states/categories_states.dart';
-import '../../repos/categories_repo.dart';
+import '../../Domain/Repositories/base_repository.dart';
+import '../../locator.dart';
 
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
-
-  late CategoriesRepository repository;
+  var repository = locator.get<BaseRepository>();
   bool _isBusy = false;
 
-  CategoriesBloc({required this.repository}) : super(CategoriesIdle()){
+  CategoriesBloc() : super(CategoriesIdle()) {
     on<LoadCategories>(_onLoadCategories);
   }
 
-  _delay() async {
-    _isBusy = true;
-    await (Future.delayed(Duration(seconds: 1)));
-    _isBusy = false;
-}
-
-  _onLoadCategories(CategoriesEvent event, Emitter<CategoriesState> emit) async{
+  _onLoadCategories(
+      CategoriesEvent event, Emitter<CategoriesState> emit) async {
     if (!_isBusy) {
       //_delay();
       emit(CategoriesLoadStarted());
-      await repository.fetchCategories();
-      emit(CategoriesLoadCompleted(categories: repository.categories));
+      var categories = await repository.fetchCategories();
+      emit(CategoriesLoadCompleted(categories: categories));
     }
   }
-
 }

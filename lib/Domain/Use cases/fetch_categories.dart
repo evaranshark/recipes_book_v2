@@ -10,7 +10,7 @@ class FetchCategories
 
   @override
   Future<List<Category>> execute(FetchCategoriesParams params) {
-    return repository.getCategories();
+    return repository.fetchCategories();
   }
 }
 

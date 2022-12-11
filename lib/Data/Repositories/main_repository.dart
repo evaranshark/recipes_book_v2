@@ -1,3 +1,5 @@
+import 'package:recipes_book_v2/locator.dart';
+
 import '../../Domain/Entities/category.dart';
 import '../../Domain/Entities/recipe.dart';
 import '../../Domain/Entities/recipe_summary.dart';
@@ -7,8 +9,8 @@ import '../Models/category_model.dart';
 import '../base_data_source.dart';
 
 class MainRepository implements BaseRepository {
-  final BaseDataSource dataSource;
-  const MainRepository({required this.dataSource});
+  MainRepository();
+  final dataSource = locator.get<BaseDataSource>();
   @override
   Future<List<RecipeSummary>> getBookmarks(User user) {
     // TODO: implement getBookmarks
@@ -16,7 +18,7 @@ class MainRepository implements BaseRepository {
   }
 
   @override
-  Future<List<Category>> getCategories() async {
+  Future<List<Category>> fetchCategories() async {
     var adapter = CategoryModelAdapter();
     var data = await dataSource.fetchCategories();
     return data.map((e) => adapter.cast(e)).toList();

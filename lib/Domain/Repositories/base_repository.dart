@@ -13,7 +13,7 @@ abstract class BaseRepository {
   Future<List<RecipeSummary>> getRecipesByCategory(Category category);
 
   ///Fetches all categories.
-  Future<List<Category>> getCategories();
+  Future<List<Category>> fetchCategories();
 
   ///Fetches bookmarks of given [User].
   Future<List<RecipeSummary>> getBookmarks(User user);
