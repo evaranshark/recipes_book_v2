@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../Domain/Entities/category.dart';
-import '../app_data.dart';
-import '../bloc/blocs/categories_bloc.dart';
-import '../bloc/cubits/recipes_cubit.dart';
-import '../bloc/events/categories_events.dart';
-import '../bloc/states/categories_states.dart';
+import '../../Domain/Entities/category.dart';
+import '../../app_data.dart';
+import '../../bloc/blocs/categories_bloc.dart';
+import '../../bloc/cubits/recipes_cubit.dart';
+import '../../bloc/events/categories_events.dart';
+import '../../bloc/states/categories_states.dart';
 
 class CategoriesPage extends StatelessWidget {
   @override

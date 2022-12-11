@@ -3,11 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipes_book_v2/bloc/blocs/categories_bloc.dart';
 import 'package:recipes_book_v2/bloc/cubits/recipes_cubit.dart';
 import 'package:recipes_book_v2/bloc/cubits/theme_cubit.dart';
-import 'package:recipes_book_v2/services/bottom_navigation_handler.dart';
-import 'package:recipes_book_v2/services/navigation_controller.dart';
+import 'package:recipes_book_v2/Presentation/Controllers/bottom_navigation_handler.dart';
+import 'package:recipes_book_v2/Presentation/Controllers/navigation_controller.dart';
 import 'package:recipes_book_v2/theme_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:recipes_book_v2/widgets/bottom_nav_bar.dart';
+import 'package:recipes_book_v2/Utils/widgets/bottom_nav_bar.dart';
+import 'Presentation/pages/start_page.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -47,7 +48,7 @@ class App extends StatelessWidget {
           theme: ThemeProvider().light,
           darkTheme: ThemeProvider().dark,
           themeMode: state.mode,
-          home: HomePage(), //StartPage(),
+          home: StartPage(),
           onGenerateRoute: (settings) {
             return MaterialPageRoute(builder: (context) => HomePage());
           },

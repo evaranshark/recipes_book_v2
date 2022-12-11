@@ -1,4 +1,5 @@
-import '../../models/recipe_summary_model.dart';
+import 'package:recipes_book_v2/Domain/Entities/recipe_summary.dart';
+
 /// Current implementations are:
 /// * RecipesEmpty
 /// * RecipesLoading
@@ -11,7 +12,7 @@ class RecipesEmpty implements RecipesState {}
 class RecipesLoading implements RecipesState {}
 
 class RecipesLoaded implements RecipesState {
-  List<RecipeSummaryModel> recipes;
+  List<RecipeSummary> recipes;
   RecipesLoaded({required this.recipes});
 }
 

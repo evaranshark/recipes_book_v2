@@ -4,9 +4,6 @@ import 'package:recipes_book_v2/bloc/cubits/recipes_cubit.dart';
 import 'package:recipes_book_v2/bloc/states/recipes_states.dart';
 
 class RecipesPage extends StatelessWidget {
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,18 +17,14 @@ class RecipesPage extends StatelessWidget {
                 if (state.recipes.isNotEmpty) {
                   return ListView.builder(
                       itemBuilder: (context, index) => Card(
-                        child: ListTile(
-                            title: Text(state.recipes[index].name)
-                        ),
-                      )
-                  );
-                }
-                else {
+                            child: ListTile(
+                                title: Text(state.recipes[index].title)),
+                          ));
+                } else {
                   return Text("Wow, such empty!");
                 }
               }
-              if (state is RecipesLoading)
-              {
+              if (state is RecipesLoading) {
                 return const CircularProgressIndicator();
               }
               if (state is RecipesEmpty) {
@@ -48,5 +41,4 @@ class RecipesPage extends StatelessWidget {
       ),
     );
   }
-
 }

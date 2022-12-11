@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipes_book_v2/app_data.dart';
-import 'package:recipes_book_v2/services/bottom_navigation_handler.dart';
+import 'package:recipes_book_v2/Presentation/Controllers/bottom_navigation_handler.dart';
 
 class EvaBottomNavBar extends StatefulWidget {
   GlobalKey<NavigatorState> navigatorKey;
