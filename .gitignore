@@ -53,6 +53,5 @@ app.*.map.json
 /windows/
 /test/
 /analysis_options.yaml
-/.metadata
 /pubspec.lock
-
+.metadata
