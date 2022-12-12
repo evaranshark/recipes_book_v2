@@ -18,11 +18,8 @@ class EvaBottomNavBarState extends State<EvaBottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    List<NavigationDestination> items = AppData.bottomNavBarItemsData
-        .map((e) => NavigationDestination(
-            icon: Icon(e.icon),
-            selectedIcon: Icon(e.activeIcon),
-            label: e.label))
+    List<NavigationDestination> items = AppData.destinations
+        .map((e) => NavigationDestination(icon: Icon(e.icon), label: e.label))
         .toList();
     return NavigationBar(
         destinations: items,
@@ -31,9 +28,8 @@ class EvaBottomNavBarState extends State<EvaBottomNavBar> {
   }
 
   _onItemSelected(int index) async {
-    navigationHandler
-        .onDestinationChanged(AppData.bottomNavBarItemsData[index].alias);
-    widget.onSelected?.call(AppData.bottomNavBarItemsData[index].alias);
+    navigationHandler.onDestinationChanged(AppData.destinations[index].alias);
+    widget.onSelected?.call(AppData.destinations[index].alias);
     setState(() {
       _selectedIndex = index;
     });

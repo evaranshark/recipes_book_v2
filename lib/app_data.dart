@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 
 class AppData {
-
-  static List<BottomNavBarItemData> bottomNavBarItemsData = <BottomNavBarItemData> [
-    BottomNavBarItemData(alias: NavBarAliases.categories, icon: Icons.menu_outlined, activeIcon: Icons.menu, label: "Категории"),
-    BottomNavBarItemData(alias: NavBarAliases.settings, icon: Icons.settings_outlined, activeIcon: Icons.settings_rounded, label: "Настройки")
+  static List<NaviDestination> destinations = <NaviDestination>[
+    NaviDestination(
+        alias: NavBarAliases.categories,
+        icon: Icons.menu_outlined,
+        label: "Категории"),
+    NaviDestination(
+        alias: NavBarAliases.settings,
+        icon: Icons.settings_outlined,
+        label: "Настройки")
   ];
 
   static AppRoutes get appRoutes => AppRoutes();
-
 }
 
-enum NavBarAliases {
-  categories,
-  settings
-}
+enum NavBarAliases { categories, settings }
 
 class AppRoutes {
   AppRoutes.internal();
@@ -27,18 +28,11 @@ class AppRoutes {
   String get recipes => "/recipes";
 }
 
-class BottomNavBarItemData {
+class NaviDestination {
   IconData icon;
-  IconData activeIcon;
   String label;
   NavBarAliases alias;
 
-  BottomNavBarItemData(
-      {
-        required this.alias,
-        required this.icon,
-        required this.activeIcon,
-        required this.label
-      }
-  );
+  NaviDestination(
+      {required this.alias, required this.icon, required this.label});
 }

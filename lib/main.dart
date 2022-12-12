@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recipes_book_v2/Utils/widgets/responsive_page.dart';
 import 'package:recipes_book_v2/bloc/blocs/categories_bloc.dart';
 import 'package:recipes_book_v2/bloc/cubits/recipes_cubit.dart';
 import 'package:recipes_book_v2/bloc/cubits/theme_cubit.dart';
@@ -50,7 +51,7 @@ class App extends StatelessWidget {
           themeMode: state.mode,
           home: StartPage(),
           onGenerateRoute: (settings) {
-            return MaterialPageRoute(builder: (context) => HomePage());
+            return MaterialPageRoute(builder: (context) => const HomePage());
           },
         );
       }),
@@ -78,13 +79,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        bottomNavigationBar:
-            EvaBottomNavBar(navigatorKey: navigationHandler.navigatorKey),
-        body: Navigator(
-          key: navigationHandler.navigatorKey,
-          onGenerateRoute: _sectionsNavigationController.onGenerateRoute,
-          initialRoute: _sectionsNavigationController.initialRoute,
-        ));
+    return Navigator(
+      key: navigationHandler.navigatorKey,
+      onGenerateRoute: _sectionsNavigationController.onGenerateRoute,
+      initialRoute: _sectionsNavigationController.initialRoute,
+    );
   }
 }
