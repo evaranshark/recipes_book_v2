@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recipes_book_v2/Utils/widgets/responsive_page.dart';
+import 'package:recipes_book_v2/Utils/widgets/responsive.dart';
 import 'package:recipes_book_v2/bloc/blocs/categories_bloc.dart';
 import 'package:recipes_book_v2/bloc/cubits/recipes_cubit.dart';
 import 'package:recipes_book_v2/bloc/cubits/theme_cubit.dart';

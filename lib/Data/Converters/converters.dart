@@ -8,6 +8,7 @@ abstract class Converter<Model> {
 }
 
 class CategoryModelConverter implements Converter<CategoryModel> {
+  @override
   CategoryModel fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
@@ -19,6 +20,7 @@ class CategoryModelConverter implements Converter<CategoryModel> {
     );
   }
 
+  @override
   Map<String, dynamic> toFirestore(CategoryModel model) {
     return {
       'name': model.title,

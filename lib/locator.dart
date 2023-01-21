@@ -6,6 +6,7 @@ import 'package:recipes_book_v2/Data/Repositories/main_repository.dart';
 import 'package:recipes_book_v2/Data/base_data_source.dart';
 import 'package:recipes_book_v2/Domain/Repositories/base_repository.dart';
 import 'package:recipes_book_v2/Utils/breakpoints.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 var locator = GetIt.instance;
 
@@ -15,6 +16,9 @@ void setup() {
     desktop: 1100,
     largeDesktop: 1920,
   ));
+  locator.registerSingletonAsync<SharedPreferences>(
+      () => SharedPreferences.getInstance(),
+      instanceName: 'prefs');
   locator.registerSingleton<FirebaseFirestore>(FirebaseFirestore.instance);
   _registerConverters();
   locator.registerSingleton<BaseDataSource>(FirebaseSource());

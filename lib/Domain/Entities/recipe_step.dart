@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
 class RecipeStep extends Equatable {
-  String? title;
-  String content;
+  final String? title;
+  final String content;
 
-  RecipeStep({required this.content, this.title});
+  const RecipeStep({required this.content, this.title});
 
   @override
   List<Object?> get props => [title, content];
