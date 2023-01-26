@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recipes_book_v2/Utils/router.dart';
+import 'package:recipes_book_v2/bloc/blocs/appstate_bloc.dart';
 import 'package:recipes_book_v2/bloc/blocs/categories_bloc.dart';
 import 'package:recipes_book_v2/bloc/cubits/recipes_cubit.dart';
 import 'package:recipes_book_v2/bloc/cubits/theme_cubit.dart';
 import 'package:recipes_book_v2/Presentation/Controllers/bottom_navigation_handler.dart';
-import 'package:recipes_book_v2/Presentation/Controllers/navigation_controller.dart';
 import 'package:recipes_book_v2/theme_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:recipes_book_v2/Utils/widgets/bottom_nav_bar.dart';
@@ -19,7 +20,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  setup();
+  await setup();
   FirebaseAuth mAuth = FirebaseAuth.instance;
   User? user = mAuth.currentUser;
   if (user == null) {
@@ -40,51 +41,19 @@ class App extends StatelessWidget {
         BlocProvider<CategoriesBloc>(create: (context) => CategoriesBloc()),
         BlocProvider<ThemeModeCubit>(create: (context) => ThemeModeCubit()),
         BlocProvider<RecipesCubit>(create: (context) => RecipesCubit()),
+        BlocProvider<AppStateBloc>(create: (context) => AppStateBloc()),
       ],
       child: BlocBuilder<ThemeModeCubit, ThemeModeState>(
           builder: (context, state) {
-        return MaterialApp(
+        return MaterialApp.router(
+          routerDelegate: locator.get<EvaRouterDelegate>(),
+          backButtonDispatcher: RootBackButtonDispatcher(),
           title: 'Flutter Demo',
           theme: ThemeProvider().light,
           darkTheme: ThemeProvider().dark,
           themeMode: state.mode,
-          home: StartPage(),
-          onGenerateRoute: (settings) {
-            return MaterialPageRoute(builder: (context) => HomePage());
-          },
         );
       }),
     );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key, this.title}) : super(key: key);
-  final String? title;
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final NavigationController _sectionsNavigationController =
-      NavigationController.sections();
-  final BottomNavigationHandler navigationHandler = BottomNavigationHandler();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        bottomNavigationBar:
-            EvaBottomNavBar(navigatorKey: navigationHandler.navigatorKey),
-        body: Navigator(
-          key: navigationHandler.navigatorKey,
-          onGenerateRoute: _sectionsNavigationController.onGenerateRoute,
-          initialRoute: _sectionsNavigationController.initialRoute,
-        ));
   }
 }

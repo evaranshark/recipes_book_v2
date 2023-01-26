@@ -4,10 +4,16 @@ import 'package:recipes_book_v2/bloc/cubits/recipes_cubit.dart';
 import 'package:recipes_book_v2/bloc/states/recipes_states.dart';
 
 class RecipesPage extends StatelessWidget {
+  RecipesPage({this.arguments});
+
+  Map<String, String>? arguments;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(arguments?['categoryId'] ?? ''),
+      ),
       body: Center(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),

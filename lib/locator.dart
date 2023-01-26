@@ -5,12 +5,15 @@ import 'package:recipes_book_v2/Data/Data%20Sources/firebase_source.dart';
 import 'package:recipes_book_v2/Data/Repositories/main_repository.dart';
 import 'package:recipes_book_v2/Data/base_data_source.dart';
 import 'package:recipes_book_v2/Domain/Repositories/base_repository.dart';
+import 'package:recipes_book_v2/Utils/router.dart';
 
 var locator = GetIt.instance;
 
-void setup() {
+Future<void> setup() async {
+  locator.registerSingleton<EvaRouterDelegate>(EvaRouterDelegate());
   locator.registerSingleton<FirebaseFirestore>(FirebaseFirestore.instance);
   _registerConverters();
+
   locator.registerSingleton<BaseDataSource>(FirebaseSource());
   locator.registerSingleton<BaseRepository>(MainRepository());
 }

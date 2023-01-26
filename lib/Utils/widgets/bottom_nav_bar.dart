@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipes_book_v2/app_data.dart';
 import 'package:recipes_book_v2/Presentation/Controllers/bottom_navigation_handler.dart';
+import 'package:recipes_book_v2/bloc/states/app_state.dart';
+
+import '../../bloc/blocs/appstate_bloc.dart';
 
 class EvaBottomNavBar extends StatefulWidget {
-  GlobalKey<NavigatorState> navigatorKey;
-  EvaBottomNavBar({this.onSelected, required this.navigatorKey});
+  EvaBottomNavBar({this.onSelected});
 
   @override
   State<StatefulWidget> createState() => EvaBottomNavBarState();
@@ -13,9 +16,6 @@ class EvaBottomNavBar extends StatefulWidget {
 }
 
 class EvaBottomNavBarState extends State<EvaBottomNavBar> {
-  BottomNavigationHandler navigationHandler = BottomNavigationHandler();
-  int _selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     List<NavigationDestination> items = AppData.bottomNavBarItemsData
@@ -26,16 +26,23 @@ class EvaBottomNavBarState extends State<EvaBottomNavBar> {
         .toList();
     return NavigationBar(
         destinations: items,
-        onDestinationSelected: _onItemSelected,
-        selectedIndex: _selectedIndex);
+        onDestinationSelected: (index) => _onItemSelected(context, index),
+        selectedIndex:
+            context.read<AppStateBloc>().state.navigationBarState.currentIndex);
   }
 
-  _onItemSelected(int index) async {
-    navigationHandler
-        .onDestinationChanged(AppData.bottomNavBarItemsData[index].alias);
+  _onItemSelected(BuildContext context, int index) async {
+    switch (index) {
+      case 0:
+        context
+            .read<AppStateBloc>()
+            .updateNavBarState(NavBarState.categories());
+        break;
+      case 1:
+        context.read<AppStateBloc>().updateNavBarState(NavBarState.settings());
+        break;
+    }
     widget.onSelected?.call(AppData.bottomNavBarItemsData[index].alias);
-    setState(() {
-      _selectedIndex = index;
-    });
+    setState(() {});
   }
 }

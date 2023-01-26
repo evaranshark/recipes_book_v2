@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:recipes_book_v2/Utils/router.dart';
+import 'package:recipes_book_v2/locator.dart';
 
 import '../../app_data.dart';
 
@@ -8,17 +10,16 @@ class BottomNavigationHandler {
       BottomNavigationHandler._internal();
 
   factory BottomNavigationHandler() => _instance;
-  final GlobalKey<NavigatorState> _key = GlobalKey<NavigatorState>();
-  GlobalKey<NavigatorState> get navigatorKey => _key;
+  final _router = locator.get<EvaRouterDelegate>();
 
   onDestinationChanged(NavBarAliases alias) {
     try {
       switch (alias) {
         case NavBarAliases.categories:
-          _key.currentState?.pushNamed(AppData.appRoutes.categories);
+          _router.pushPage(name: AppData.appRoutes.categories);
           break;
         case NavBarAliases.settings:
-          _key.currentState?.pushNamed(AppData.appRoutes.settings);
+          _router.pushPage(name: AppData.appRoutes.settings);
           break;
         default:
           break;
