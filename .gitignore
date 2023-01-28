@@ -54,3 +54,4 @@ app.*.map.json
 /test/
 /analysis_options.yaml
 /pubspec.lock
+*.lock
