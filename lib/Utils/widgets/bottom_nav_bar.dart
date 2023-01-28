@@ -18,11 +18,8 @@ class EvaBottomNavBar extends StatefulWidget {
 class EvaBottomNavBarState extends State<EvaBottomNavBar> {
   @override
   Widget build(BuildContext context) {
-    List<NavigationDestination> items = AppData.bottomNavBarItemsData
-        .map((e) => NavigationDestination(
-            icon: Icon(e.icon),
-            selectedIcon: Icon(e.activeIcon),
-            label: e.label))
+    List<NavigationDestination> items = AppData.destinations
+        .map((e) => NavigationDestination(icon: Icon(e.icon), label: e.label))
         .toList();
     return NavigationBar(
         destinations: items,

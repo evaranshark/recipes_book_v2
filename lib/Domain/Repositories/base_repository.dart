@@ -6,6 +6,7 @@ import '../Entities/user.dart';
 
 abstract class BaseRepository {
   //TODO: implement parameters
+
   ///Fetches [Recipe] data by given parameters
   Future<Recipe> fetchRecipe(String recipeId);
 
