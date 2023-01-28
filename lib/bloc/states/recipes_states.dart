@@ -16,4 +16,7 @@ class RecipesLoaded implements RecipesState {
   RecipesLoaded({required this.recipes});
 }
 
-class RecipesLoadFailed implements RecipesState {}
+class RecipesLoadFailed implements RecipesState {
+  final Error error;
+  RecipesLoadFailed({required this.error});
+}

@@ -49,7 +49,7 @@ class EvaRouterDelegate extends RouterDelegate<List<RouteSettings>>
       return Navigator(
         key: navigatorKey,
         pages: List.of(_pages),
-        onPopPage: _onPopPage,
+        onPopPage: onPopPage,
       );
     }));
   }
@@ -63,7 +63,7 @@ class EvaRouterDelegate extends RouterDelegate<List<RouteSettings>>
     return Future.value(null);
   }
 
-  bool _onPopPage(Route route, dynamic result) {
+  bool onPopPage(Route route, dynamic result) {
     if (!route.didPop(result)) return false;
     popRoute();
     return true;
@@ -103,14 +103,17 @@ class EvaRouterDelegate extends RouterDelegate<List<RouteSettings>>
     Widget? child;
     switch (routeSettings.name) {
       case '/categories':
-        child = CategoriesPage();
+        if (routeSettings.arguments == null) {
+          child = CategoriesPage();
+        } else {
+          child = RecipesPage(
+              arguments: routeSettings.arguments as Map<String, String>);
+        }
         break;
       case '/settings':
         child = SettingsPage();
         break;
-      case '/recipes':
-        child = RecipesPage(
-            arguments: routeSettings.arguments as Map<String, String>);
+      case '/recipe':
         break;
       default:
         break;
@@ -125,6 +128,8 @@ class EvaRouterDelegate extends RouterDelegate<List<RouteSettings>>
   }
 
   void pushPage({required String name, dynamic arguments}) {
+    _activeHandler!.pages.clear();
+    _activeHandler!.pages.addAll(_pages);
     _activeHandler!
         .pushPage(_createPage(RouteSettings(name: name, arguments: arguments)));
     notifyListeners();

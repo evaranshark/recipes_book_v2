@@ -22,4 +22,6 @@ void _registerConverters() {
   locator.registerSingleton<CategoryModelConverter>(
     CategoryModelConverter(),
   );
+  locator.registerSingleton<RecipeSummaryModelConverter>(
+      RecipeSummaryModelConverter());
 }

@@ -1,9 +1,23 @@
+import 'package:recipes_book_v2/Domain/Entities/recipe.dart';
+
+import '../../Domain/Entities/category.dart';
+
 class AppState {
   final NavBarState navigationBarState;
+  final Category? category;
+  final Recipe? recipe;
 
-  AppState({required this.navigationBarState});
-  AppState copyWith({navigationBarState}) => AppState(
-      navigationBarState: navigationBarState ?? this.navigationBarState);
+  AppState({required this.navigationBarState, this.category, this.recipe});
+  AppState copyWith({
+    navigationBarState,
+    category,
+    recipe,
+  }) =>
+      AppState(
+        navigationBarState: navigationBarState ?? this.navigationBarState,
+        category: category ?? this.category,
+        recipe: recipe ?? this.recipe,
+      );
 }
 
 enum NavigationScope { categories, settings }

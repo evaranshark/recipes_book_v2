@@ -7,14 +7,14 @@ import '../Entities/user.dart';
 abstract class BaseRepository {
   //TODO: implement parameters
   ///Fetches [Recipe] data by given parameters
-  Future<Recipe> getRecipe();
+  Future<Recipe> fetchRecipe(String recipeId);
 
   ///Fetches recipes summaries for given [Category].
-  Future<List<RecipeSummary>> getRecipesByCategory(Category category);
+  Future<List<RecipeSummary>> fetchRecipesByCategory(Category category);
 
   ///Fetches all categories.
   Future<List<Category>> fetchCategories();
 
   ///Fetches bookmarks of given [User].
-  Future<List<RecipeSummary>> getBookmarks(User user);
+  Future<List<RecipeSummary>> fetchBookmarks(User user);
 }

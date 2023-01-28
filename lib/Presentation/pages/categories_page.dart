@@ -31,7 +31,6 @@ class CategoriesPage extends StatelessWidget {
                   children: [
                     Card(
                       child: ListTile(
-                        minLeadingWidth: 2,
                         leading: Icon(Icons.bookmark_outline_rounded),
                         title: Text("Закладки"),
                         onTap: () => _onBookmarksSelected(context),
@@ -45,8 +44,8 @@ class CategoriesPage extends StatelessWidget {
                         child: ListTile(
                             key: ValueKey(categories[index].id),
                             title: Text(categories[index].title),
-                            onTap: () => _onCategorySelected(
-                                context, categories[index].id),
+                            onTap: () =>
+                                _onCategorySelected(context, categories[index]),
                             leading: Icon(Icons.category_outlined)),
                       ),
                     ),
@@ -73,10 +72,11 @@ class CategoriesPage extends StatelessWidget {
     ));
   }
 
-  void _onCategorySelected(BuildContext context, String id) {
-    context.read<RecipesCubit>().loadRecipesByCategory(categoryId: id);
+  void _onCategorySelected(BuildContext context, Category category) {
     var router = locator.get<EvaRouterDelegate>();
-    router.pushPage(name: '/recipes', arguments: {'categoryId': id});
-    context.read<AppStateBloc>().notifyUpdate();
+    router
+        .pushPage(name: '/categories', arguments: {'categoryId': category.id});
+    //context.read<RecipesCubit>().loadRecipesByCategory(category: category);
+    context.read<AppStateBloc>().selectCategory(category);
   }
 }

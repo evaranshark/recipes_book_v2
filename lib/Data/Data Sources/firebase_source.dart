@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:recipes_book_v2/Data/Models/recipe_model.dart';
 import 'package:recipes_book_v2/Data/Models/category_model.dart';
+import 'package:recipes_book_v2/Data/Models/recipe_summary_model.dart';
 import 'package:recipes_book_v2/Data/base_data_source.dart';
 import 'package:recipes_book_v2/locator.dart';
 import '/Data/Converters/converters.dart';
@@ -21,8 +22,24 @@ class FirebaseSource implements BaseDataSource {
   }
 
   @override
-  Future<RecipeModel> fetchRecipe() {
+  Future<RecipeModel> fetchRecipe(BaseDataSourceParams params) async {
     // TODO: implement fetchRecipe
     throw UnimplementedError();
+  }
+
+  @override
+  Future<List<RecipeSummaryModel>> fetchRecipesByCategory(
+      BaseDataSourceParams params) async {
+    var firebase = locator.get<FirebaseFirestore>();
+    var converter = locator.get<RecipeSummaryModelConverter>();
+    var data = await firebase
+        .collection('recipe_summaries')
+        .withConverter(
+            fromFirestore: converter.fromFirestore,
+            toFirestore: (RecipeSummaryModel value, options) =>
+                converter.toFirestore(value))
+        .where('category', isEqualTo: params.categoryId)
+        .get();
+    return data.docs.map((e) => e.data()).toList();
   }
 }
