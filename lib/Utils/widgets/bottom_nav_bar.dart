@@ -39,7 +39,7 @@ class EvaBottomNavBarState extends State<EvaBottomNavBar> {
         context.read<AppStateBloc>().updateNavBarState(NavBarState.settings());
         break;
     }
-    widget.onSelected?.call(AppData.bottomNavBarItemsData[index].alias);
+    widget.onSelected?.call(AppData.destinations[index].alias);
     setState(() {});
   }
 }
