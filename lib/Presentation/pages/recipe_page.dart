@@ -13,12 +13,12 @@ class RecipePage extends StatelessWidget {
         if (state is RecipeLoaded) {
           child = Scaffold(
             appBar: AppBar(
-              title: Text(state.data.title),
+              title: Text(state.data.summary.title),
             ),
             bottomNavigationBar: EvaBottomNavBar(),
             body: Center(
               child: ListView.builder(itemBuilder: ((context, index) {
-                var stepData = state.data.steps[index];
+                var stepData = List.of(state.data.steps)[index];
                 return Card(
                   child: ExpansionTile(
                     initiallyExpanded: true,

@@ -15,16 +15,41 @@ class FirebaseSource implements BaseDataSource {
         .collection('categories')
         .withConverter(
             fromFirestore: converter.fromFirestore,
-            toFirestore: (CategoryModel value, options) =>
-                converter.toFirestore(value))
+            toFirestore: converter.toFirestore)
         .get();
     return data.docs.map((e) => e.data()).toList();
   }
 
   @override
   Future<RecipeModel> fetchRecipe(BaseDataSourceParams params) async {
-    // TODO: implement fetchRecipe
-    throw UnimplementedError();
+    var firebase = locator.get<FirebaseFirestore>();
+    var recipeConverter = locator.get<RecipeModelConverter>();
+    var summaryConverter = locator.get<RecipeSummaryModelConverter>();
+    var ingredientConverter = locator.get<IngredientModelConverter>();
+    var recipeDoc = firebase.collection('recipes').doc(params.recipeId);
+    var recipeSnapshot = await recipeDoc.get();
+    if (recipeSnapshot.data() == null) {
+      throw Exception("Getting recipe data from datasource failed.");
+    }
+    var ingredientsRef = recipeDoc.collection('ingredients');
+    var summary = firebase
+        .doc(recipeSnapshot.data()!['summary'])
+        .withConverter(
+          fromFirestore: summaryConverter.fromFirestore,
+          toFirestore: summaryConverter.toFirestore,
+        )
+        .get();
+    RecipeModel recipe = recipeConverter.fromFirestore(recipeSnapshot, null)
+      ..copyWith(
+        summary: summary,
+        ingredients: ingredientsRef
+            .withConverter(
+              fromFirestore: ingredientConverter.fromFirestore,
+              toFirestore: ingredientConverter.toFirestore,
+            )
+            .get(),
+      );
+    return recipe;
   }
 
   @override
@@ -35,9 +60,9 @@ class FirebaseSource implements BaseDataSource {
     var data = await firebase
         .collection('recipe_summaries')
         .withConverter(
-            fromFirestore: converter.fromFirestore,
-            toFirestore: (RecipeSummaryModel value, options) =>
-                converter.toFirestore(value))
+          fromFirestore: converter.fromFirestore,
+          toFirestore: converter.toFirestore,
+        )
         .where('category', isEqualTo: params.categoryId)
         .get();
     return data.docs.map((e) => e.data()).toList();

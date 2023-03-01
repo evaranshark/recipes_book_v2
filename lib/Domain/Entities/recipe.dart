@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:recipes_book_v2/Domain/Entities/recipe_step.dart';
+import 'package:recipes_book_v2/Domain/Entities/recipe_summary.dart';
 
 import 'ingredient.dart';
 
@@ -8,22 +9,21 @@ class Recipe extends Equatable {
   /// Unique id of recipe. Connects with model.
   final String id;
 
-  /// Title of this recipe.
-  final String title;
+  final RecipeSummary summary;
 
   /// Steps to perform in this recipe.
-  final List<RecipeStep> steps;
+  final Iterable<RecipeStep> steps;
 
   /// List of ingredients for this recipe
-  final List<Ingredient> indgredients;
+  final Iterable<Ingredient> indgredients;
 
   const Recipe({
     required this.id,
-    required this.title,
+    required this.summary,
     required this.steps,
     required this.indgredients,
   });
 
   @override
-  List<Object?> get props => [id, title];
+  List<Object?> get props => [id, summary.id];
 }

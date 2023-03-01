@@ -5,7 +5,7 @@ class Ingredient extends Equatable {
   final String id;
   final String name;
   final Units units;
-  final double amount;
+  final num amount;
 
   Ingredient({
     required this.id,

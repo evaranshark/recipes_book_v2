@@ -7,8 +7,9 @@ abstract class Units extends Equatable {
 
 class MassUnits extends Units {
   const MassUnits({required super.value});
-  Units get kg => MassUnits(value: "kg");
-  Units get g => MassUnits(value: "g");
+  static Units get kg => const MassUnits(value: "kg");
+  static Units get g => const MassUnits(value: "g");
+  static Units get mg => const MassUnits(value: "mg");
 
   @override
   List<Object?> get props => [super.value];
@@ -16,8 +17,8 @@ class MassUnits extends Units {
 
 class VolumeUnits extends Units {
   const VolumeUnits({required super.value});
-  Units get ml => VolumeUnits(value: 'ml');
-  Units get l => VolumeUnits(value: 'l');
+  static Units get ml => const VolumeUnits(value: 'ml');
+  static Units get l => const VolumeUnits(value: 'l');
 
   @override
   List<Object?> get props => [super.value];
@@ -26,9 +27,16 @@ class VolumeUnits extends Units {
 class RelativeUnits extends Units {
   const RelativeUnits({required super.value});
 
-  Units get glass => RelativeUnits(value: 'glass');
-  Units get spoon => RelativeUnits(value: 'spoon');
-  Units get tspoon => RelativeUnits(value: 'tea spoon');
+  static Units get glass => const RelativeUnits(value: 'glass');
+  static Units get spoon => const RelativeUnits(value: 'spoon');
+  static Units get tspoon => const RelativeUnits(value: 'tea spoon');
+
+  @override
+  List<Object?> get props => [super.value];
+}
+
+class CustomUnits extends Units {
+  const CustomUnits({required super.value});
 
   @override
   List<Object?> get props => [super.value];

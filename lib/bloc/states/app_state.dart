@@ -1,22 +1,31 @@
 import 'package:recipes_book_v2/Domain/Entities/recipe.dart';
 
 import '../../Domain/Entities/category.dart';
+import '../../Domain/Entities/recipe_summary.dart';
 
 class AppState {
   final NavBarState navigationBarState;
   final Category? category;
   final Recipe? recipe;
+  final RecipeSummary? recipeSummary;
 
-  AppState({required this.navigationBarState, this.category, this.recipe});
+  AppState({
+    required this.navigationBarState,
+    this.category,
+    this.recipe,
+    this.recipeSummary,
+  });
   AppState copyWith({
     navigationBarState,
     category,
     recipe,
+    recipeSummary,
   }) =>
       AppState(
         navigationBarState: navigationBarState ?? this.navigationBarState,
         category: category ?? this.category,
         recipe: recipe ?? this.recipe,
+        recipeSummary: recipeSummary ?? this.recipeSummary,
       );
 }
 

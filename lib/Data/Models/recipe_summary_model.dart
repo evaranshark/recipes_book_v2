@@ -7,13 +7,13 @@ class RecipeSummaryModel {
   final String title;
   final String summary;
   final String averageTime;
-  final String recipeRef;
+  final String recipe;
   const RecipeSummaryModel({
     required this.id,
     required this.title,
     required this.summary,
     required this.averageTime,
-    required this.recipeRef,
+    required this.recipe,
   });
 }
 
@@ -26,7 +26,7 @@ class RecipeSummaryModelAdapter
       title: source.title,
       summary: source.summary,
       averageTime: source.averageTime,
-      recipeRef: source.recipeRef,
+      recipeId: source.recipe,
     );
   }
 }

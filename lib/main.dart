@@ -16,6 +16,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'locator.dart';
 
 void main() async {
+  await init();
+  runApp(const App());
+}
+
+Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -27,7 +32,6 @@ void main() async {
     await mAuth.signInAnonymously().onError(
         (error, stackTrace) => throw Exception("Anonymous sign-in failed"));
   }
-  runApp(const App());
 }
 
 class App extends StatelessWidget {

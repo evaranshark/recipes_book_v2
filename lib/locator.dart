@@ -34,4 +34,7 @@ void _registerConverters() {
   );
   locator.registerSingleton<RecipeSummaryModelConverter>(
       RecipeSummaryModelConverter());
+  locator
+      .registerSingleton<IngredientModelConverter>(IngredientModelConverter());
+  locator.registerSingleton<RecipeModelConverter>(RecipeModelConverter());
 }

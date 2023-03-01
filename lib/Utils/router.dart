@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipes_book_v2/Presentation/pages/categories_page.dart';
+import 'package:recipes_book_v2/Presentation/pages/recipe_page.dart';
 import 'package:recipes_book_v2/Presentation/pages/recipes_page.dart';
 import 'package:recipes_book_v2/Presentation/pages/settings_page.dart';
 import 'package:recipes_book_v2/Utils/route_handler.dart';
@@ -111,9 +112,10 @@ class EvaRouterDelegate extends RouterDelegate<List<RouteSettings>>
         }
         break;
       case '/settings':
-        child = SettingsPage();
+        child = const SettingsPage();
         break;
       case '/recipe':
+        child = RecipePage();
         break;
       default:
         break;
