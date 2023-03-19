@@ -29,16 +29,7 @@ class EvaBottomNavBarState extends State<EvaBottomNavBar> {
   }
 
   _onItemSelected(BuildContext context, int index) async {
-    switch (index) {
-      case 0:
-        context
-            .read<AppStateBloc>()
-            .updateNavBarState(NavBarState.categories());
-        break;
-      case 1:
-        context.read<AppStateBloc>().updateNavBarState(NavBarState.settings());
-        break;
-    }
+    context.read<AppStateBloc>().updateNavBarState(index);
     widget.onSelected?.call(AppData.destinations[index].alias);
     setState(() {});
   }

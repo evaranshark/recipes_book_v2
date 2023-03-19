@@ -74,9 +74,9 @@ class CategoriesPage extends StatelessWidget {
 
   void _onCategorySelected(BuildContext context, Category category) {
     var router = locator.get<EvaRouterDelegate>();
-    router
-        .pushPage(name: '/categories', arguments: {'categoryId': category.id});
-    //context.read<RecipesCubit>().loadRecipesByCategory(category: category);
-    context.read<AppStateBloc>().selectCategory(category);
+    router.pushPage(
+        name: '/categories',
+        arguments: {'categoryId': category.id, 'categoryName': category.title});
+    context.read<RecipesCubit>().loadRecipesByCategory(category: category);
   }
 }

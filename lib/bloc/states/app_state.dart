@@ -5,31 +5,19 @@ import '../../Domain/Entities/recipe_summary.dart';
 
 class AppState {
   final NavBarState navigationBarState;
-  final Category? category;
-  final Recipe? recipe;
-  final RecipeSummary? recipeSummary;
 
   AppState({
     required this.navigationBarState,
-    this.category,
-    this.recipe,
-    this.recipeSummary,
   });
   AppState copyWith({
     navigationBarState,
-    category,
-    recipe,
-    recipeSummary,
   }) =>
       AppState(
         navigationBarState: navigationBarState ?? this.navigationBarState,
-        category: category ?? this.category,
-        recipe: recipe ?? this.recipe,
-        recipeSummary: recipeSummary ?? this.recipeSummary,
       );
 }
 
-enum NavigationScope { categories, settings }
+enum NavigationScope { categories, settings, bookmarks }
 
 class NavBarState {
   final NavigationScope scope;
@@ -37,6 +25,22 @@ class NavBarState {
   NavBarState._({required this.scope, required this.currentIndex});
   factory NavBarState.categories() =>
       NavBarState._(scope: NavigationScope.categories, currentIndex: 0);
+  factory NavBarState.bookmarks() =>
+      NavBarState._(scope: NavigationScope.bookmarks, currentIndex: 0);
   factory NavBarState.settings() =>
       NavBarState._(scope: NavigationScope.settings, currentIndex: 1);
+  NavBarState updateState(int index) {
+    switch (index) {
+      case 1:
+        return NavBarState.settings();
+      case 0:
+        if (scope != NavigationScope.categories) {
+          return NavBarState.categories();
+        } else {
+          return NavBarState.bookmarks();
+        }
+      default:
+        return NavBarState.categories();
+    }
+  }
 }

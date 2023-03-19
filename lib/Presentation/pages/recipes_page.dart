@@ -5,6 +5,7 @@ import 'package:recipes_book_v2/Utils/router.dart';
 import 'package:recipes_book_v2/Utils/widgets/bottom_nav_bar.dart';
 import 'package:recipes_book_v2/bloc/blocs/appstate_bloc.dart';
 import 'package:recipes_book_v2/bloc/cubits/recipes_cubit.dart';
+import 'package:recipes_book_v2/bloc/recipe/recipe_cubit.dart';
 import 'package:recipes_book_v2/bloc/states/app_state.dart';
 import 'package:recipes_book_v2/bloc/states/recipes_states.dart';
 
@@ -20,61 +21,49 @@ class RecipesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => _onPop(context),
-      child: BlocBuilder<AppStateBloc, AppState>(builder: (context, appState) {
-        if (appState.category != null) {
-          context
-              .read<RecipesCubit>()
-              .loadRecipesByCategory(category: appState.category!);
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(appState.category?.title ?? ''),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(arguments!['categoryName']!),
+        ),
+        bottomNavigationBar: EvaBottomNavBar(),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: BlocBuilder<RecipesCubit, RecipesState>(
+              builder: (context, recipesState) {
+                if (recipesState is RecipesLoaded) {
+                  if (recipesState.recipes.isNotEmpty) {
+                    return ListView.builder(
+                      itemCount: recipesState.recipes.length,
+                      itemBuilder: (context, index) => Card(
+                        child: RecipeSummaryTile(
+                          recipe: recipesState.recipes[index],
+                        ),
+                      ),
+                    );
+                  } else {
+                    return Text("Wow, such empty!");
+                  }
+                }
+                if (recipesState is RecipesLoading) {
+                  return const CircularProgressIndicator();
+                }
+                if (recipesState is RecipesEmpty) {
+                  return Container();
+                }
+                if (recipesState is RecipesLoadFailed) {
+                  return const Text("Error");
+                }
+                return Container();
+              },
             ),
-            bottomNavigationBar: EvaBottomNavBar(),
-            body: Center(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: BlocBuilder<RecipesCubit, RecipesState>(
-                  builder: (context, recipesState) {
-                    if (recipesState is RecipesLoaded) {
-                      if (recipesState.recipes.isNotEmpty) {
-                        return ListView.builder(
-                          itemCount: recipesState.recipes.length,
-                          itemBuilder: (context, index) => Card(
-                            child: RecipeSummaryTile(
-                              recipe: recipesState.recipes[index],
-                            ),
-                          ),
-                        );
-                      } else {
-                        return Text("Wow, such empty!");
-                      }
-                    }
-                    if (recipesState is RecipesLoading) {
-                      return const CircularProgressIndicator();
-                    }
-                    if (recipesState is RecipesEmpty) {
-                      return Container();
-                    }
-                    if (recipesState is RecipesLoadFailed) {
-                      return const Text("Error");
-                    }
-                    return Container();
-                  },
-                ),
-              ),
-            ),
-          );
-        } else {
-          return const Scaffold(
-            body: Center(child: Text("Category selection fail")),
-          );
-        }
-      }),
+          ),
+        ),
+      ),
     );
   }
 
   Future<bool> _onPop(BuildContext context) {
-    context.read<AppStateBloc>().closeRecipe();
     return Future.value(true);
   }
 }
@@ -118,7 +107,9 @@ class RecipeSummaryTile extends StatelessWidget {
   }
 
   _onPressed(BuildContext context, RecipeSummary recipe) {
-    context.read<AppStateBloc>().selectRecipeSummary(recipe);
-    locator.get<EvaRouterDelegate>().pushPage(name: '/recipe');
+    context.read<RecipeCubit>().selectRecipe(recipe.recipeId);
+    locator
+        .get<EvaRouterDelegate>()
+        .pushPage(name: '/recipe', arguments: {'recipeName': recipe.title});
   }
 }

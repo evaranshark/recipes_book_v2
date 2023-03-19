@@ -42,7 +42,7 @@ class EvaRouterDelegate extends RouterDelegate<List<RouteSettings>>
   Widget build(BuildContext context) {
     return BlocBuilder<AppStateBloc, AppState>(builder: ((context, state) {
       _scope = state.navigationBarState.scope;
-      _activeHandler = _scope == NavigationScope.categories
+      _activeHandler = _scope != NavigationScope.settings
           ? _categoriesHandler
           : _settingsHandler;
       _pages.clear();
@@ -115,7 +115,8 @@ class EvaRouterDelegate extends RouterDelegate<List<RouteSettings>>
         child = const SettingsPage();
         break;
       case '/recipe':
-        child = RecipePage();
+        child = RecipePage(
+            arguments: routeSettings.arguments as Map<String, String>);
         break;
       default:
         break;
