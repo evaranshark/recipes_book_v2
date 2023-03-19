@@ -7,6 +7,7 @@ import 'package:recipes_book_v2/bloc/blocs/categories_bloc.dart';
 import 'package:recipes_book_v2/bloc/cubits/recipes_cubit.dart';
 import 'package:recipes_book_v2/bloc/cubits/theme_cubit.dart';
 import 'package:recipes_book_v2/Presentation/Controllers/bottom_navigation_handler.dart';
+import 'package:recipes_book_v2/bloc/recipe/recipe_cubit.dart';
 import 'package:recipes_book_v2/theme_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Presentation/pages/start_page.dart';
@@ -46,6 +47,7 @@ class App extends StatelessWidget {
         BlocProvider<ThemeModeCubit>(create: (context) => ThemeModeCubit()),
         BlocProvider<RecipesCubit>(create: (context) => RecipesCubit()),
         BlocProvider<AppStateBloc>(create: (context) => AppStateBloc()),
+        BlocProvider<RecipeCubit>(create: ((context) => RecipeCubit())),
       ],
       child: BlocBuilder<ThemeModeCubit, ThemeModeState>(
           builder: (context, state) {
