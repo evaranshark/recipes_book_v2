@@ -14,7 +14,6 @@ class SettingsPage extends StatelessWidget {
     var router = locator.get<EvaRouterDelegate>();
     return Scaffold(
       appBar: AppBar(title: Text("Settings")),
-      bottomNavigationBar: EvaBottomNavBar(),
       body: Center(
         child: Padding(
             padding: EdgeInsets.all(16),

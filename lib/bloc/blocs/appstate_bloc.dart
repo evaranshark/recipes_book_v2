@@ -12,4 +12,6 @@ class AppStateBloc extends Cubit<AppState> {
   void updateNavBarState(int index) => emit(state.copyWith(
       navigationBarState: state.navigationBarState.updateState(index)));
   void notifyUpdate() => emit(state.copyWith());
+  void updateTitle(String title) => emit(state.copyWith(appBarTitle: title));
+  void setBlockNavBar(bool value) => emit(state.copyWith(blockNavBar: value));
 }

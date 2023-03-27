@@ -19,7 +19,6 @@ class CategoriesPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Categories"),
       ),
-      bottomNavigationBar: EvaBottomNavBar(),
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(16),
@@ -41,7 +40,7 @@ class CategoriesPage extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: categories.length,
                       itemBuilder: (context, index) => Hero(
-                        tag: "category",
+                        tag: categories[index].id,
                         transitionOnUserGestures: true,
                         flightShuttleBuilder: ((flightContext,
                                 animation,

@@ -63,11 +63,8 @@ class RecipeModelConverter implements Converter<RecipeModel> {
     final data = snapshot.data();
     return RecipeModel(
         id: snapshot.id,
-        steps: (data!['steps'] as Iterable).map((e) => RecipeStepModel(
-              number: e['number'],
-              content: e['content'],
-              title: e['title'],
-            )));
+        steps: (data!['steps'] as Iterable)
+            .map((e) => _RecipeStepConverter().fromFirestore(e)));
   }
 
   @override
@@ -75,6 +72,21 @@ class RecipeModelConverter implements Converter<RecipeModel> {
     // TODO: implement toFirestore
     throw UnimplementedError();
   }
+}
+
+class _RecipeStepConverter {
+  RecipeStepModel fromFirestore(Map<String, dynamic> step) {
+    var model = RecipeStepModel(
+      number: step['number'] as int,
+      content: List<String>.from(step['content']),
+      title: step['title'],
+    );
+    return model;
+  }
+}
+
+String _contentSpan(source) {
+  return source.toString();
 }
 
 class IngredientModelConverter implements Converter<IngredientModel> {

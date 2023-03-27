@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:recipes_book_v2/Data/Models/recipe_summary_model.dart';
 import 'package:recipes_book_v2/Data/Models/units.dart';
 import 'package:recipes_book_v2/Domain/Entities/Adapters/recipe_adapter.dart';
@@ -47,7 +48,7 @@ class IngredientModel {
 
 class RecipeStepModel {
   final int number;
-  final String content;
+  final Iterable<String> content;
   final String? title;
 
   RecipeStepModel({
@@ -62,9 +63,10 @@ class RecipeModelAdapter implements RecipeAdapter<RecipeModel> {
   Recipe cast(RecipeModel source) {
     var stepAdapter = RecipeStepModelAdapter();
     var ingredientAdapter = IngredientModelAdapter();
+    var ingredients = source.ingredients!.map((e) => ingredientAdapter.cast(e));
     return Recipe(
       id: source.id,
-      indgredients: source.ingredients!.map((e) => ingredientAdapter.cast(e)),
+      indgredients: ingredients,
       steps: source.steps.map((e) => stepAdapter.cast(e)),
       summary: RecipeSummaryModelAdapter().cast(source.summary!),
     );
@@ -74,7 +76,10 @@ class RecipeModelAdapter implements RecipeAdapter<RecipeModel> {
 class RecipeStepModelAdapter implements RecipeStepAdapter<RecipeStepModel> {
   @override
   RecipeStep cast(RecipeStepModel source) {
-    return RecipeStep(title: source.title, content: source.content);
+    debugPrint("RecipeStepAdapter");
+    var result = RecipeStep(
+        title: source.title, content: source.content, number: source.number);
+    return result;
   }
 }
 

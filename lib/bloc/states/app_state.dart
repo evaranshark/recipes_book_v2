@@ -5,15 +5,23 @@ import '../../Domain/Entities/recipe_summary.dart';
 
 class AppState {
   final NavBarState navigationBarState;
+  final String appBarTitle;
+  final bool blockNavBar;
 
   AppState({
     required this.navigationBarState,
+    this.appBarTitle = "",
+    this.blockNavBar = false,
   });
   AppState copyWith({
     navigationBarState,
+    appBarTitle,
+    blockNavBar,
   }) =>
       AppState(
         navigationBarState: navigationBarState ?? this.navigationBarState,
+        appBarTitle: appBarTitle ?? this.appBarTitle,
+        blockNavBar: blockNavBar ?? this.blockNavBar,
       );
 }
 

@@ -24,12 +24,11 @@ class RecipesPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Hero(
-            tag: "category",
+            tag: arguments!['categoryId']!,
             transitionOnUserGestures: true,
             child: Text(arguments!['categoryName']!),
           ),
         ),
-        bottomNavigationBar: EvaBottomNavBar(),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -40,7 +39,7 @@ class RecipesPage extends StatelessWidget {
                     return ListView.builder(
                       itemCount: recipesState.recipes.length,
                       itemBuilder: (context, index) => Hero(
-                        tag: "recipe",
+                        tag: recipesState.recipes[index].title,
                         transitionOnUserGestures: true,
                         flightShuttleBuilder: (flightContext,
                                 animation,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recipes_book_v2/Presentation/pages/custom_page.dart';
 import 'package:recipes_book_v2/Utils/router.dart';
 import 'package:recipes_book_v2/bloc/blocs/appstate_bloc.dart';
 import 'package:recipes_book_v2/Utils/widgets/responsive.dart';
@@ -51,13 +52,14 @@ class App extends StatelessWidget {
       ],
       child: BlocBuilder<ThemeModeCubit, ThemeModeState>(
           builder: (context, state) {
-        return MaterialApp.router(
-          routerDelegate: locator.get<EvaRouterDelegate>(),
-          backButtonDispatcher: RootBackButtonDispatcher(),
+        return MaterialApp(
+          // routerDelegate: locator.get<EvaRouterDelegate>(),
+          //backButtonDispatcher: RootBackButtonDispatcher(),
           title: 'Flutter Demo',
           theme: ThemeProvider().light,
           darkTheme: ThemeProvider().dark,
           themeMode: state.mode,
+          home: CustomPage(),
         );
       }),
     );

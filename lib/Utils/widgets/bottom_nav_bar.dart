@@ -21,11 +21,24 @@ class EvaBottomNavBarState extends State<EvaBottomNavBar> {
     List<NavigationDestination> items = AppData.destinations
         .map((e) => NavigationDestination(icon: Icon(e.icon), label: e.label))
         .toList();
-    return NavigationBar(
-        destinations: items,
-        onDestinationSelected: (index) => _onItemSelected(context, index),
-        selectedIndex:
-            context.read<AppStateBloc>().state.navigationBarState.currentIndex);
+    return BlocBuilder<AppStateBloc, AppState>(builder: (context, state) {
+      return AnimatedCrossFade(
+        firstChild: NavigationBar(
+          destinations: items,
+          onDestinationSelected: (index) => _onItemSelected(context, index),
+          selectedIndex: context
+              .read<AppStateBloc>()
+              .state
+              .navigationBarState
+              .currentIndex,
+        ),
+        secondChild: const SizedBox(),
+        crossFadeState: state.blockNavBar
+            ? CrossFadeState.showSecond
+            : CrossFadeState.showFirst,
+        duration: const Duration(milliseconds: 300),
+      );
+    });
   }
 
   _onItemSelected(BuildContext context, int index) async {

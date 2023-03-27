@@ -21,6 +21,7 @@ class EvaRouterDelegate extends RouterDelegate<List<RouteSettings>>
   final _navigatorKey = GlobalKey<NavigatorState>();
   final _pages = <Page>[];
   late NavigationScope _scope;
+  HeroController _heroController = HeroController();
 
   EvaRouterDelegate() {
     _categoriesHandler.addListener(() {
@@ -47,10 +48,13 @@ class EvaRouterDelegate extends RouterDelegate<List<RouteSettings>>
           : _settingsHandler;
       _pages.clear();
       _pages.addAll(_activeHandler!.pages);
-      return Navigator(
-        key: navigatorKey,
-        pages: List.of(_pages),
-        onPopPage: onPopPage,
+      return HeroControllerScope(
+        controller: _heroController,
+        child: Navigator(
+          key: navigatorKey,
+          pages: List.of(_pages),
+          onPopPage: onPopPage,
+        ),
       );
     }));
   }

@@ -1,3 +1,4 @@
+import 'package:recipes_book_v2/Data/Models/recipe_model.dart';
 import 'package:recipes_book_v2/Domain/Entities/Adapters/recipe_summary_adapter.dart';
 import 'package:recipes_book_v2/locator.dart';
 
@@ -27,9 +28,11 @@ class MainRepository implements BaseRepository {
   }
 
   @override
-  Future<Recipe> fetchRecipe(String recipeId) {
-    // TODO: implement getRecipe
-    throw UnimplementedError();
+  Future<Recipe> fetchRecipe(String recipeId) async {
+    final adapter = RecipeModelAdapter();
+    var data =
+        await dataSource.fetchRecipe(BaseDataSourceParams(recipeId: recipeId));
+    return adapter.cast(data);
   }
 
   @override

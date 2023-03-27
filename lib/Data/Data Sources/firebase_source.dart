@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:recipes_book_v2/Data/Models/recipe_model.dart';
 import 'package:recipes_book_v2/Data/Models/category_model.dart';
 import 'package:recipes_book_v2/Data/Models/recipe_summary_model.dart';
@@ -32,23 +33,26 @@ class FirebaseSource implements BaseDataSource {
       throw Exception("Getting recipe data from datasource failed.");
     }
     var ingredientsRef = recipeDoc.collection('ingredients');
-    var summary = firebase
-        .doc(recipeSnapshot.data()!['summary'])
+    var summary = await recipeSnapshot
+        .data()!['summary']
         .withConverter(
           fromFirestore: summaryConverter.fromFirestore,
           toFirestore: summaryConverter.toFirestore,
         )
-        .get();
-    RecipeModel recipe = recipeConverter.fromFirestore(recipeSnapshot, null)
-      ..copyWith(
-        summary: summary,
-        ingredients: ingredientsRef
-            .withConverter(
-              fromFirestore: ingredientConverter.fromFirestore,
-              toFirestore: ingredientConverter.toFirestore,
-            )
-            .get(),
-      );
+        .get()
+        .then((e) => e.data());
+    var ingredients = await ingredientsRef
+        .withConverter(
+          fromFirestore: ingredientConverter.fromFirestore,
+          toFirestore: ingredientConverter.toFirestore,
+        )
+        .get()
+        .then((value) => value.docs.map((e) => e.data()).toList());
+    RecipeModel recipe =
+        recipeConverter.fromFirestore(recipeSnapshot, null).copyWith(
+              summary: summary,
+              ingredients: ingredients,
+            );
     return recipe;
   }
 
