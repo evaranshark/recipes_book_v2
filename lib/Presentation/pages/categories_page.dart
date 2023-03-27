@@ -40,13 +40,23 @@ class CategoriesPage extends StatelessWidget {
                       physics: ScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: categories.length,
-                      itemBuilder: (context, index) => Card(
-                        child: ListTile(
-                            key: ValueKey(categories[index].id),
-                            title: Text(categories[index].title),
-                            onTap: () =>
-                                _onCategorySelected(context, categories[index]),
-                            leading: Icon(Icons.category_outlined)),
+                      itemBuilder: (context, index) => Hero(
+                        tag: "category",
+                        transitionOnUserGestures: true,
+                        flightShuttleBuilder: ((flightContext,
+                                animation,
+                                flightDirection,
+                                fromHeroContext,
+                                toHeroContext) =>
+                            const Card()),
+                        child: Card(
+                          child: ListTile(
+                              key: ValueKey(categories[index].id),
+                              title: Text(categories[index].title),
+                              onTap: () => _onCategorySelected(
+                                  context, categories[index]),
+                              leading: const Icon(Icons.category_outlined)),
+                        ),
                       ),
                     ),
                   ],

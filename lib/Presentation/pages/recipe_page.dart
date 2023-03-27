@@ -14,7 +14,11 @@ class RecipePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(arguments['recipeName']!),
+        title: Hero(
+          tag: "recipe",
+          transitionOnUserGestures: true,
+          child: Text(arguments['recipeName']!),
+        ),
       ),
       bottomNavigationBar: EvaBottomNavBar(),
       body: BlocBuilder<RecipeCubit, RecipeState>(builder: (context, state) {

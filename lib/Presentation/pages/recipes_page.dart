@@ -23,7 +23,11 @@ class RecipesPage extends StatelessWidget {
       onWillPop: () => _onPop(context),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(arguments!['categoryName']!),
+          title: Hero(
+            tag: "category",
+            transitionOnUserGestures: true,
+            child: Text(arguments!['categoryName']!),
+          ),
         ),
         bottomNavigationBar: EvaBottomNavBar(),
         body: Center(
@@ -35,9 +39,19 @@ class RecipesPage extends StatelessWidget {
                   if (recipesState.recipes.isNotEmpty) {
                     return ListView.builder(
                       itemCount: recipesState.recipes.length,
-                      itemBuilder: (context, index) => Card(
-                        child: RecipeSummaryTile(
-                          recipe: recipesState.recipes[index],
+                      itemBuilder: (context, index) => Hero(
+                        tag: "recipe",
+                        transitionOnUserGestures: true,
+                        flightShuttleBuilder: (flightContext,
+                                animation,
+                                flightDirection,
+                                fromHeroContext,
+                                toHeroContext) =>
+                            const Card(),
+                        child: Card(
+                          child: RecipeSummaryTile(
+                            recipe: recipesState.recipes[index],
+                          ),
                         ),
                       ),
                     );
