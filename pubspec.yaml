@@ -46,6 +46,8 @@ dependencies:
   animations: ^2.0.7
   shared_preferences: ^2.0.16
   google_fonts: ^3.0.1
+  firebase_ui_auth: ^1.2.2
+  firebase_ui_oauth_google: ^1.1.2
 
 dev_dependencies:
   flutter_test:

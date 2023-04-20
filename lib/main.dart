@@ -1,3 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipes_book_v2/Presentation/pages/custom_page.dart';
@@ -13,7 +16,7 @@ import 'package:recipes_book_v2/theme_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Presentation/pages/start_page.dart';
 import 'firebase_options.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 
 import 'locator.dart';
 
@@ -29,11 +32,16 @@ Future<void> init() async {
   );
   await setup();
   FirebaseAuth mAuth = FirebaseAuth.instance;
-  User? user = mAuth.currentUser;
-  if (user == null) {
-    await mAuth.signInAnonymously().onError(
-        (error, stackTrace) => throw Exception("Anonymous sign-in failed"));
-  }
+  FirebaseUIAuth.configureProviders([
+    EmailAuthProvider(),
+    //PhoneAuthProvider(),
+    GoogleProvider(clientId: 'GOOGLE_CLIENT_ID'),
+  ]);
+  //User? user = mAuth.currentUser;
+  // if (user == null) {
+  //   await mAuth.signInAnonymously().onError(
+  //       (error, stackTrace) => throw Exception("Anonymous sign-in failed"));
+  // }
 }
 
 class App extends StatelessWidget {
@@ -59,7 +67,24 @@ class App extends StatelessWidget {
           theme: ThemeProvider().light,
           darkTheme: ThemeProvider().dark,
           themeMode: state.mode,
-          home: CustomPage(),
+          //home: CustomPage(),
+          routes: {
+            '/sign-in': (context) {
+              return SignInScreen(
+                //providers: providers,
+                actions: [
+                  AuthStateChangeAction<SignedIn>((context, state) {
+                    Navigator.pushReplacementNamed(context, '/page');
+                  }),
+                ],
+              );
+            },
+            '/page': (context) {
+              return CustomPage();
+            }
+          },
+          initialRoute:
+              FirebaseAuth.instance.currentUser == null ? '/sign-in' : '/page',
         );
       }),
     );

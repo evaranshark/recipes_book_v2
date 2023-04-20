@@ -17,9 +17,8 @@ Future<void> setup() async {
     desktop: 1100,
     largeDesktop: 1920,
   ));
-  locator.registerSingletonAsync<SharedPreferences>(
-      () => SharedPreferences.getInstance(),
-      instanceName: 'prefs');
+  var prefs = await SharedPreferences.getInstance();
+  locator.registerSingleton<SharedPreferences>(prefs, instanceName: 'prefs');
   locator.registerSingleton<EvaRouterDelegate>(EvaRouterDelegate());
   locator.registerSingleton<FirebaseFirestore>(FirebaseFirestore.instance);
   _registerConverters();

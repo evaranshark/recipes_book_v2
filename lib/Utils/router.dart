@@ -19,7 +19,9 @@ class EvaRouterDelegate extends RouterDelegate<List<RouteSettings>>
   ]);
   RouteHandler? _activeHandler;
   final _navigatorKey = GlobalKey<NavigatorState>();
-  final _pages = <Page>[];
+  final _pages = <Page>[
+    MaterialPage(name: '/categories', child: CategoriesPage())
+  ];
   late NavigationScope _scope;
   HeroController _heroController = HeroController();
 
